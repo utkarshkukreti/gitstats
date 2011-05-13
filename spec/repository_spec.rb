@@ -21,5 +21,9 @@ describe GitStats::Repository do
     it "should set the repo path" do
       @repo.path.should == @repo_path
     end
+
+    it "should have commits" do
+      @repo.commits.size.should == 3537
+    end
   end
 end

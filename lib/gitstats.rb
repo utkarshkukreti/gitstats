@@ -4,3 +4,4 @@ end
 
 require 'gitstats/cli'
 require 'gitstats/repository'
+require 'gitstats/commit'
