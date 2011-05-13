@@ -1,3 +1,3 @@
-module Gitstats
+module GitStats
   # Your code goes here...
 end
