@@ -23,7 +23,7 @@ describe GitStats::Repository do
     end
 
     it "should have commits" do
-      @repo.commits.size.should == 3537
+      @repo.commits.size.should == 3538
     end
   end
 end

@@ -1,6 +1,6 @@
 module GitStats
   class Repository
-    GIT_LOG_ARGS = '--numstat --pretty=format:"%H%n%P%n%aN <%ae>%n%cN <%ce>%n%ct%n%s%n%b%nENDOFOUTPUTGITMESSAGEHERE"'
+    GIT_LOG_ARGS = '--numstat --pretty=raw'
 
     attr_reader :path
 
@@ -25,16 +25,15 @@ module GitStats
     def load_commits
       commits = []
       IO.popen("cd #{@path} && git log #{GIT_LOG_ARGS}") do |io|
-        current = ""
-        status = :new
+        current = [io.gets]
         while input = io.gets
-          status = :after_message if input == "ENDOFOUTPUTGITMESSAGEHERE\n"
-          if status == :after_message && input == "\n"
-            status = :new
+          if input.start_with?("commit ")
             commits.unshift Commit.new(current)
-            current = ""
+            current = []
           end
+          current << input.chomp
         end
+        commits.unshift Commit.new(current)
       end
       commits
     end
