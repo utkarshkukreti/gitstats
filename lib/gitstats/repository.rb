@@ -25,13 +25,13 @@ module GitStats
     def load_commits
       commits = []
       IO.popen("cd #{@path} && git log #{GIT_LOG_ARGS}") do |io|
-        current = [io.gets]
-        while input = io.gets
-          if input.start_with?("commit ")
+        current = []
+        io.each_line do |line|
+          if line.start_with?("commit ") && current.any?
             commits.unshift Commit.new(current)
             current = []
           end
-          current << input.chomp
+          current << line.chomp
         end
         commits.unshift Commit.new(current)
       end
