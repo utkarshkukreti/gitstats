@@ -13,6 +13,8 @@ module GitStats
       end
       repo = Repository.new(argv.first || '.')
       locals = { commits: repo.commits }
+      skipped_files = 0
+
       Dir[File.expand_path('../templates/*.haml', __FILE__)].each do |template|
         rendered = Haml::Engine.new(File.read(template)).render(Object.new, locals)
         output_file = File.join(output_dir, File.basename(template).gsub(/haml$/, 'html'))
@@ -23,11 +25,16 @@ module GitStats
             File.open(output_file, 'w') { |f| f << rendered }
           else
             puts "Skipping."
+            skipped_files += 1
           end
         else
           puts "Writing to #{output_file}"
           File.open(output_file, 'w') { |f| f << rendered }
         end
+      end
+
+      if skipped_files > 0
+        puts "#{skipped_files} files were skipped. Call with '-f' to force overwrite."
       end
     end
   end
