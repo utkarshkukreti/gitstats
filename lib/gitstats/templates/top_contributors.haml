@@ -2,11 +2,9 @@
 %html
   %head
     %meta{:charset => "utf-8"}
-    %title GitStats - Basic
+    %title GitStats - Top Contributors
   %body 
-    %h1 GitStats - Basic
-
-    %h2 Top Contributors
+    %h1 Top Contributors
     %table
       - commits.group_by {|c| [c.author_name, c.author_email]}.
       - map {|author, c| [author, c.size]}.

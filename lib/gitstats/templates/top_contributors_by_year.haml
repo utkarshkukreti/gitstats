@@ -1,0 +1,18 @@
+!!!5
+%html
+  %head
+    %meta{:charset => "utf-8"}
+    %title GitStats - Top Contributors by Year
+  %body 
+    %h1 Top Contributors by Year
+    - commits.group_by {|c| c.author_time.year }.each do |year, cs|
+      %h2= year
+      %table
+        - cs.group_by {|c| [c.author_name, c.author_email]}.
+        - map {|author, c| [author, c.size]}.
+        - sort_by(&:last).reverse.
+        - each do |(name, email), commits_count|
+          %tr
+            %td= name
+            %td= email
+            %td= commits_count
