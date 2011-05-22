@@ -1,7 +1,3 @@
-module GitStats
-  # Your code goes here...
-end
-
 require 'fileutils'
 require 'slop'
 require 'haml'
