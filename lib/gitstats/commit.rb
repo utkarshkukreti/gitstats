@@ -1,6 +1,6 @@
 module GitStats
   class Commit
-    attr_accessor :sha, :tree, :parents_sha, :author_name, :author_email, :author_time, :committer_name, :committer_email,
+    attr_reader :sha, :tree, :parents_sha, :author_name, :author_email, :author_time, :committer_name, :committer_email,
       :committer_time, :message, :timestamp
     def initialize(data)
       @sha = data.shift.split.last
