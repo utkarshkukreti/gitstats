@@ -11,6 +11,10 @@ module GitStats
         on :o, 'output', 'Output directory (defaults to ./output)', true, :default => './output'
         on :t, 'templates', 'Directory containing templates to render', true,
           :default => File.expand_path('../templates', __FILE__)
+        on :v, 'version', 'Print version' do
+          puts GitStats::VERSION
+          exit
+        end
       end
       @repository = Repository.new argv.first || '.'
     end
